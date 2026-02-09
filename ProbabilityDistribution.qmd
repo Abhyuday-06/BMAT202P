@@ -1,0 +1,156 @@
+---
+title: "Fitting Discrete Probability Distributions using R"
+format: html
+editor: visual
+---
+
+# Discrete Probability Distributions
+
+## Binomial Distribution
+
+The Binomial distribution is given by:
+
+$$
+P(X = x) = \binom{n}{x} p^{x} (1 - p)^{\,n-x}
+$$
+
+-   
+
+    ```{r}
+    n = 4
+    p = 0.5
+    dbinom(2, n, p)
+    sum(dbinom(2:4,n,p))
+    pbinom(2,n,p)
+    ```
+
+```{r}
+x= 0:n
+px = dbinom(x, n, p)
+Ex = weighted.mean(x, px)
+Varx = weighted.mean(x*x, px) - Ex^2
+```
+
+# Plot Distribution
+
+```{r}
+plot(x, px, type = "h",
+xlab = "Values of X",
+ylab = "Probability",
+main = "Binomial Distribution")
+```
+
+## Example 1
+
+```{r}
+# COIN problem
+
+n = 6
+p = 0.5
+dbinom(2, size = n, prob = p) # exactly 2 heads 
+
+# Plotting above
+
+x = 0:6
+px = dbinom(x, n, p)
+plot(x, px, type = "h",
+xlab = "Values of X",
+ylab = "Probability",
+main = "Binomial Distribution")
+```
+
+## Example 2
+
+```{r}
+sum(dbinom(4:6,n,p)) # atleast 4 heads
+
+# Plotting above
+
+x = 4:6
+px = dbinom(x, n, p)
+plot(x, px, type = "h",
+xlab = "Values of X",
+ylab = "Probability",
+main = "Binomial Distribution")
+```
+
+## Example 3
+
+```{r}
+# DICE problem
+
+n = 5
+p = 1/6
+
+dbinom(0, n, p) # appears 0 time
+dbinom(1, n, p) # appears 1 time
+dbinom(2, n, p) # appears 2 times
+dbinom(3, n, p) # appears 3 times
+dbinom(4, n, p) # appears 4 times
+dbinom(5, n, p) # appears 5 times
+sum(dbinom(3:n, n, p)) # appears atleast 3 times
+sum(dbinom(0:4, n, p)) #atmost 4 times
+
+# Plotting above
+
+x = 0:6
+px = dbinom(x, n, p)
+plot(x, px, type = "h",
+xlab = "Values of X",
+ylab = "Probability",
+main = "Binomial Distribution")
+```
+
+```{r}
+
+```
+
+# Poisson Distribution
+
+The Poisson distribution is given by:$$P(X = x) = \frac{e^{-\lambda} \lambda^{x}}{x!}$$
+
+```{r}
+m = 20 # Number of 
+ps = 0.02
+lambda = m*ps
+
+# Probabilities
+dpois(2, lambda)
+sum(dpois(2:m, lambda))
+sum(dpois(0:2, lambda))
+
+# Expectation and Variance
+x1 = 0:m
+px1 = dpois(x1, lambda)
+Ex1 = weighted.mean(x1, px1)
+Varx1 = weighted.mean(x1*x1, px1) - Ex1^2
+
+# Plotting above
+
+plot(x1, px1, type = 'p', xlab = "Values of X",
+ylab = "Probability",
+main = "Poisson Distribution")
+```
+
+### Example 1
+
+```{r}
+lambda = 0.72
+
+dpois(0, lambda)
+dpois(1, lambda)
+dpois(2, lambda)
+dpois(3, lambda)
+
+```
+
+### Example 2
+
+```{r}
+m = 2000
+ps = 0.001
+lambda = m*ps
+
+dpois(3, lambda) # exactly 3
+sum(dpois(2:m, lambda)) # more than 2000
+```
