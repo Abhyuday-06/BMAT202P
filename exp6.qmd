@@ -1,0 +1,99 @@
+---
+title: "NormalDistribution"
+format: html
+editor: visual
+---
+
+## Normal Distribution
+
+Find a) Less than 15 minutes
+
+```{r}
+m = 20
+sd = 5
+pnorm(15, m, sd)
+```
+
+b\) More than 25 minutes
+
+```{r}
+p2 = pnorm(40, mean = 20, sd = 5) - pnorm(25, mean = 20, sd = 5)
+p2
+```
+
+c\) Between 15 and 25 minutes
+
+```{r}
+p3 = pnorm(25, m, sd) - pnorm(15, m, sd)
+p3
+```
+
+d\) Plot the distribution
+
+```{r}
+x = seq(0, 40)
+y = dnorm(x, mean = 20, sd = 5)
+plot(x, y, type = 'l', xlab = "minutes", ylab = "probability", main = "Normal Distribution curve")
+
+# plotting part a)
+x2 = seq(0,15)
+y2 = dnorm(x2, mean = 20, sd = 5)
+polygon(c(0, x2, 15), c(0, y2, 0), col = 'orange')
+
+# plotting part b)
+x3 = seq(25, 40)
+y3 = dnorm(x3, mean = 20, sd = 5)
+polygon(c(25, x3, 40), c(0, y3, 0), col = 'green')
+
+# plotting part c)
+
+x4 = seq(15, 25)
+y4 = dnorm(x4, mean = 20, sd = 5)
+polygon(c(15, x4, 25), c(0,y4,0), col = 'blue')
+```
+
+e\) Table the distribution
+
+```{r}
+
+```
+
+## Question 1
+
+mean = 1500, sd = 350
+
+a\) \< 750 games
+
+```{r}
+m = 1500
+sd = 350
+
+p1 = pnorm(750, m, sd)
+p1
+```
+
+b\) more than 2000 games
+
+```{r}
+p2 = 1 - pnorm(2000, m, sd)
+p2
+```
+
+c\) find the 90th percentile of the number of games played during career
+
+```{r}
+p90 <- qnorm(0.90, mean = m, sd = sd)
+p90
+```
+
+## Question 2
+
+Find the probability of a specific range of values, such as calculating that penguin flipper lengths(mm,mm) are less than 200mm which is approx 84 percent in this case
+
+```{r}
+m <- 192.9
+sd <- 7.1
+
+# P(X < 200)
+pnorm(200, mean = m, sd = sd)
+```
