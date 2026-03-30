@@ -1,0 +1,107 @@
+---
+title: "T Test and F Test"
+author: "24BCE5561"
+format: html
+editor: visual
+---
+
+# T- Test
+
+## Test whether the difference between the means is significant
+
+```{r}
+sample1 = c(19, 17, 15, 21, 16, 18, 16, 14)
+sample2 = c(15, 14, 15, 19, 15, 18, 16, 20)
+
+
+results = t.test(sample1, sample2)
+cv = results$statistic
+cv 
+alpha = 0.05
+
+dof = results$parameter # gives in decimal
+dof = round(dof)
+
+#critical value
+tv = qt(1-(alpha/2), dof)
+tv
+
+# conclusion
+
+if(cv <= tv){
+  print("Accept H0")
+} else{
+  print("Reject H0")
+}
+```
+
+## Paired t-test
+
+```{r}
+test1 = c(19,17,15,21,16,18,16,14,19,20)
+test2 = c(15,14,15,19,15,18,16,20,22,19)
+
+results = t.test(test1, test2, paired = TRUE)
+alpha = 0.05
+#p-value
+tv = results$p.value
+tv
+
+if(tv > alpha){
+  print("Accept H0")
+} else{
+  print("Reject H0")
+}
+```
+
+# F- Test
+
+```{r}
+sample1 = c(19,17,15,21,16,18,16,14)
+sample2 = c(15,14,15,19,15,18,16,20)
+
+results = var.test(sample1, sample2)
+results
+cv = results$statistic
+cv
+
+alpha = 0.05
+df = results$parameter
+df
+df1 = df[1]
+df2 = df[2]
+tv = qf(1 - alpha, df1, df2) # right tailed
+tv
+
+if(cv <= tv){
+  print("Accept H0")
+} else{
+  print("Reject H0")
+}
+```
+
+## Test whether the training program significantly improved scores at 5% level
+
+```{r}
+before = c(50,60,55,58,62)
+after = c(55, 65, 50, 62, 66)
+
+results = var.test(before, after)
+results
+cv = results$statistic
+cv
+
+alpha = 0.05
+
+df = results$parameter
+df1 = df[1]
+df2 = df[2]
+tv = qf(1 - alpha, df1, df2)
+tv
+
+if(cv <= tv){
+  print("Accept H0. Yes, marks increased")
+} else{
+  print("Reject H0. No, marks didn't increase")
+}
+```
