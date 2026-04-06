@@ -1,0 +1,90 @@
+---
+title: "Chi Squared Test and ANOVA"
+author: "24BCE5561"
+format: html
+editor: visual
+---
+
+```{r}
+n = 5
+alpha = 0.05
+N = 256
+p =0.5
+x = c(0:n)
+obf = c(5, 35, 75, 84, 45, 12)
+
+exf = dbinom(x, n, p)*N
+sum_exf = sum(exf)
+cat("Sum of Expected Frequencies:", sum_exf)
+
+chisq = sum((obf - exf)^2/exf)
+cat("\nChi-Square Test Statistic:", chisq)
+
+df = n-1
+tv = qchisq(1-alpha, df)
+cat("\nTable(critical) value: ", tv)
+
+if(chisq <= tv){
+  print("Accept H0: The binomial distribution fits the data")
+} else{
+  print("Reject H0: The binomaial distribution does not fit the data")
+}
+```
+
+## Test for independence
+
+State whether the condition of the child is associated with the condition of the house
+
+```{r}
+data = matrix(c(69, 51, 81, 20, 35, 44), ncol = 2, byrow = T)
+data
+l = length(data)
+l
+alpha = 0.05
+results = chisq.test(data)
+results 
+cv = results$p.value
+cv
+
+if(cv > alpha){
+  print("Attributes are independent")
+} else{
+  print("Attributes are not independent")
+}
+```
+
+## ANOVA
+
+### CBD
+
+```{r}
+A = c
+```
+
+### RBD
+
+```{r}
+stateA = c(6,5,3,8)
+stateB = c(8,9,6,5)
+stateC = c(10,7,8,7)
+
+group = data.frame(cbind(stateA, stateB, stateC))
+sales = c(t(as.matrix(group)))
+
+f = c("state A",  "state B", "state C")
+g = c("salesman1", "salesman2", "salesman3", "salesman4")
+
+k = ncol(group)
+n = nrow(group)
+
+
+
+states = gl(k, 1, n*k, factor(f))
+states
+salesmen = gl(n, k ,n*k, factor(g))
+salesmen
+anova = aov(sales ~ states + salesmen)
+summary(anova)
+
+# based on summary, we conclude
+```
